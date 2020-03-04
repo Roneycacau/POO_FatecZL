@@ -18,17 +18,11 @@ public class Conta {
         return numero;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
 
     public String getSenha() {
         return senha;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
 
     public boolean efetuarSaque(double valor){
         return valor <= this.saldo? false:true;
