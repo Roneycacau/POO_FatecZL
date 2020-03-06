@@ -46,9 +46,9 @@ public class Aluno {
 
     public void exibir(){
         System.out.println(
-                "ID: " + this.getId() + "\n"
-                "Nome: " + this.getNome() + "\n"
-                "RA: " + this.getRa() + "\n"
+                "ID: " + this.getId() + "\n" +
+                "Nome: " + this.getNome() + "\n" +
+                "RA: " + this.getRa() + "\n" +
                 "Data de Nascimento: " + this.getNascimento() + "\n"
         );
     }
