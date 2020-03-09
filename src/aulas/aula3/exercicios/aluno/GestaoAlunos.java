@@ -130,7 +130,7 @@ public class GestaoAlunos {
             subMenuAtualizar(filtrado);
         }
 
-        menssagem = filtrado != null ? "Usuário atualizado" : "Usudário não encontrado";
+        menssagem = filtrado != null ? "Usuário atualizado" : "Usud ário não encontrado";
         JOptionPane.showMessageDialog(null, menssagem);
     }
 
@@ -171,5 +171,30 @@ public class GestaoAlunos {
     }
 
     public void menu() {
+        String opt;
+        do {
+            opt = JOptionPane.showInputDialog("Digite a letra em destaque para acessar a opção desejada\n" +
+                    "(C)riar\n(E)xibir\n(R)emover\n(A)tualizar\n(S)air");
+            switch (opt.toUpperCase()) {
+                case "C":
+                    int indice = Integer.parseInt(JOptionPane.showInputDialog("Informe em qual índice deseja criar o aluno"));
+                    this.criar(indice);
+                    break;
+                case "E":
+                    this.exibir(JOptionPane.showInputDialog("Digite o RA"));
+                    break;
+                case "R":
+                    this.excluir(JOptionPane.showInputDialog("Digite o RA"));
+                    break;
+                case "A":
+                    this.atualizar(JOptionPane.showInputDialog("Digite o RA do aluno"));
+                    break;
+                case "S":
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null,"Opção inválida","",JOptionPane.ERROR_MESSAGE);
+                    break;
+            }
+        } while (!opt.equalsIgnoreCase("s"));
     }
 }
