@@ -68,7 +68,6 @@ public class GestaoAlunos {
 
     }
 
-
     private void subMenuAtualizar(Aluno aluno) {
         String opt;
         do {
@@ -117,8 +116,6 @@ public class GestaoAlunos {
                 "\n Nascimeto: " + aluno.getNascimento()
         );
     }
-
-//TODO depois fazer essa paradinha
 
     public void atualizar(String ra) {
         String menssagem;
