@@ -1,16 +1,19 @@
 package aulas.aula3.exercicios.aluno;
 
+import javax.swing.*;
 import java.time.LocalDate;
 
 public class Aluno {
 
+    private static long contador;
     private long id;
     private String nome;
     private String ra;
     private LocalDate nascimento;
 
-    public Aluno(Long id, String nome, String ra, LocalDate nascimento) {
-        this.id = id;
+    public Aluno(String nome, String ra, LocalDate nascimento) {
+        Aluno.contador++;
+        this.id = contador;
         this.nome = nome;
         this.ra = ra;
         this.nascimento = nascimento;
@@ -45,7 +48,7 @@ public class Aluno {
     }
 
     public void exibir(){
-        System.out.println(
+        JOptionPane.showMessageDialog(null,
                 "ID: " + this.getId() + "\n" +
                 "Nome: " + this.getNome() + "\n" +
                 "RA: " + this.getRa() + "\n" +

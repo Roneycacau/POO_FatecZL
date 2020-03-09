@@ -6,12 +6,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class GestaoAlunosTest {
 
@@ -23,15 +26,16 @@ class GestaoAlunosTest {
     @BeforeEach
     public void setup(){
         dataNascimento = LocalDate.of(1989, 02, 23);
-        aluno = new Aluno(1L, "Aluno Teste", "123456", dataNascimento);
+        aluno = new Aluno("Aluno Teste", "123456", dataNascimento);
         alunos = new ArrayList<>();
         gestao = new GestaoAlunos();
-        alunos.add(aluno);
+//        alunos.add(aluno);
     }
+
 
     @Test
     public void criar() {
-        gestao.criar(1L, "Aluno Teste", "123456", 1989, 02, 23);
+        gestao.criar(anyInt());
         assertTrue(alunos.size() == 1);
     }
 
@@ -50,7 +54,11 @@ class GestaoAlunosTest {
                 .orElse(null);
         filtrado.setNascimento(nasc);
         filtrado.setNome(novoNome);
-        Mockito.doNothing().when(gestao).atualizar();
+
+//        GestaoAlunos ga = mock(GestaoAlunos.class);
+//        doNothing().when(ga).atualizar();
+//        ga.atualizar();
+
         assertNotNull(filtrado);
         assertEquals(ra, filtrado.getRa());
         assertEquals(novoNome, filtrado.getNome());
@@ -59,7 +67,33 @@ class GestaoAlunosTest {
     }
 
     @Test
-    public void excluir() {
+    public void naoDeveExcluir() {
+        String ra = "123456";
+        gestao.excluir(ra);
+
+        assertFalse(alunos.contains(ra));
+    }
+
+
+    //TODO ta pegando o aluno mockado do começo, tem que ver isso aí.
+    @Test
+    public void deveExcluir() {
+        String ra = "123456";
+        GestaoAlunos ga = mock(GestaoAlunos.class);
+//        gestao.criar(1L, "teste aluno", "123456", 1989, 02, 23);
+        Aluno al = alunos.stream()
+                .filter(alunoBuscado -> ra.equals(alunoBuscado.getRa()))
+                .findAny()
+                .orElse(null);
+
+//        assertTrue(alunos.contains(alunos.stream()
+//                .filter(alunoBuscado -> ra.equals(alunoBuscado.getRa()))
+//                .findAny()
+//                .orElse(null)));
+        assertTrue(alunos.contains(al));
+
+        alunos.removeIf(remove -> remove.equals(alunos.contains(al)));
+        assertEquals(0, alunos.size());
     }
 
     @Test
