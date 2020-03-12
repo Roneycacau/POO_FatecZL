@@ -163,7 +163,7 @@ public class GestaoAlunos {
     private Aluno findAluno(String ra) {
         return alunos.stream()
                 .filter(aluno -> ra.equals(aluno.getRa()))
-                .findAny()
+                .findFirst()
                 .orElse(null);
     }
 
