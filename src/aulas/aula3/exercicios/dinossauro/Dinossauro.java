@@ -38,25 +38,45 @@ public class Dinossauro {
         this.humor = humor;
     }
 
-    public void pular(){}
+    public void pular(){
+        this.diminuirEnergia();
+        this.mudarHumor(true);
+    }
 
-    public void correr(){}
+    public void correr(){
+        this.diminuirEnergia();
+        this.mudarHumor(true);
+    }
 
-    public void comer(){}
+    public void comer(){
+        this.aumentarEnergia();
+        mudarHumor(true);
+    }
 
-    public void atirar(){}
+    public void atirar(){
+        this.diminuirEnergia();
+        this.mudarHumor(true);
+    }
 
-    public void tomarSol(){}
+    public void tomarSol(){
+        this.aumentarVelocidade();
+        this.mudarHumor(true);
+    }
 
-    public void ficarNaSombra(){}
+    public void ficarNaSombra(){
+        this.aumentarEnergia();
+        this.mudarHumor(false);
+    }
 
     //
-    c
-    private void aumentarVelocidade(){}
+
+    private void aumentarVelocidade(){
+        this.diminuirEnergia();
+    }
 
     private void aumentarEnergia(){}
 
-    private void mudarHumor(){}
+    private void mudarHumor(boolean humor){}
 
     private void diminuirEnergia(){}
 
