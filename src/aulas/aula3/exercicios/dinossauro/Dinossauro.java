@@ -6,13 +6,20 @@ public class Dinossauro {
     double temperatura;
     boolean humor;
 
+    public Dinossauro(int energia, double velocidade, double temperatura, boolean humor) {
+        this.energia = energia;
+        this.velocidade = velocidade;
+        this.temperatura = temperatura;
+        this.humor = humor;
+    }
+
     public int getEnergia() {
         return energia;
     }
 
-    public void setEnergia(int energia) {
-        this.energia = energia;
-    }
+//    public void setEnergia(int energia) {
+//        this.energia = energia;
+//    }
 
     public double getVelocidade() {
         return velocidade;
@@ -26,9 +33,9 @@ public class Dinossauro {
         return temperatura;
     }
 
-    public void setTemperatura(double temperatura) {
-        this.temperatura = temperatura;
-    }
+//    public void setTemperatura(double temperatura) {
+//        this.temperatura = temperatura;
+//    }
 
     public boolean isHumor() {
         return humor;
@@ -38,46 +45,79 @@ public class Dinossauro {
         this.humor = humor;
     }
 
-    public void pular(){
-        this.diminuirEnergia();
-        this.mudarHumor(true);
+    //
+
+    @Override
+    public String toString() {
+        return "Skeep {" +
+                "energia= " + energia +
+                ", velocidade= " + velocidade +
+                ", temperatura= " + temperatura +
+                ", humor= " + (humor ? "Bom humor" : "Mal Humor") +
+                '}';
     }
 
-    public void correr(){
-        this.diminuirEnergia();
-        this.mudarHumor(true);
+    public void pular() {
+        if (this.energia > 0) {
+            this.diminuirEnergia();
+            if (!this.humor) this.setHumor(this.mudarHumor(this.humor));
+        } else {
+            System.out.println("Skeep sem energia. Comer ou ficar na sombra recuperam energia");
+        }
     }
 
-    public void comer(){
+    public void correr() {
+        if (this.energia > 0) {
+            this.aumentarVelocidade();
+            if (!this.humor) this.setHumor(this.mudarHumor(this.humor));
+        } else {
+            System.out.println("Skeep sem energia. Comer ou ficar na sombra recuperam energia");
+        }
+    }
+
+    public void comer() {
         this.aumentarEnergia();
-        mudarHumor(true);
+        if (!this.humor) this.setHumor(this.mudarHumor(this.humor));
     }
 
-    public void atirar(){
-        this.diminuirEnergia();
-        this.mudarHumor(true);
+    public void atirar() {
+        if (this.energia > 0) {
+            this.diminuirEnergia();
+            if (!this.humor) this.setHumor(this.mudarHumor(this.humor));
+        } else {
+            System.out.println("Skeep sem energia. Comer ou ficar na sombra recuperam energia");
+        }
     }
 
-    public void tomarSol(){
+    public void tomarSol() {
         this.aumentarVelocidade();
-        this.mudarHumor(true);
+        if (!this.humor) this.setHumor(this.mudarHumor(this.humor));
     }
 
-    public void ficarNaSombra(){
+    public void ficarNaSombra() {
         this.aumentarEnergia();
-        this.mudarHumor(false);
+        this.velocidade = 0;
+        if (this.humor) this.setHumor(this.mudarHumor(this.humor));
     }
 
     //
 
-    private void aumentarVelocidade(){
+    private void aumentarVelocidade() {
+        this.velocidade++;
         this.diminuirEnergia();
     }
 
-    private void aumentarEnergia(){}
+    private void aumentarEnergia() {
+        this.energia++;
+    }
 
-    private void mudarHumor(boolean humor){}
+    private boolean mudarHumor(boolean humor) {
+        return !humor;
+    }
 
-    private void diminuirEnergia(){}
+    private void diminuirEnergia() {
+        this.energia--;
+
+    }
 
 }
