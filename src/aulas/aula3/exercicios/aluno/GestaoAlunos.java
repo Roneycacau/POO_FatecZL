@@ -4,11 +4,9 @@ package aulas.aula3.exercicios.aluno;
 import javax.swing.*;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class GestaoAlunos {
 
-    private int indice;
     private List<Aluno> alunos = new ArrayList<>();
 
     public void criar(int indice) {
