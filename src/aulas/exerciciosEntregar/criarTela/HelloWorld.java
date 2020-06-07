@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class HelloWorld extends Application {
     @Override
-    public void start(Stage stage){
+    public void start(Stage stage) throws Exception {
         Pane pane = new Pane();
         Scene scene = new Scene(pane, 200, 100);
         Label lb_hello = new Label("Hello World");
