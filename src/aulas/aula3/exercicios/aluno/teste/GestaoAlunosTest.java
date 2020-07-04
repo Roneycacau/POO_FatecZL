@@ -25,7 +25,7 @@ class GestaoAlunosTest {
     private GestaoAlunos gestao;
     @BeforeEach
     public void setup(){
-        dataNascimento = LocalDate.of(1989, 02, 23);
+        dataNascimento = LocalDate.of(1989, 2, 23);
         aluno = new Aluno("Aluno Teste", "123456", dataNascimento);
         alunos = new ArrayList<>();
         gestao = new GestaoAlunos();
@@ -44,7 +44,7 @@ class GestaoAlunosTest {
         String ra = "123456";
         String novoNome = "Teste Aluno";
         int dia = 18;
-        int mes = 07;
+        int mes = 7;
         int ano = 2019;
         LocalDate nasc = LocalDate.of(ano, mes, dia);
 
@@ -74,7 +74,6 @@ class GestaoAlunosTest {
         assertFalse(alunos.contains(ra));
     }
 
-    //TODO ta pegando o aluno mockado do começo, tem que ver isso aí.
     @Test
     public void deveExcluir() {
         String ra = "123456";

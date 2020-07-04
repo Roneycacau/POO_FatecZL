@@ -1,13 +1,15 @@
 package aulas.exerciciosEntregar.crudaluno;
 
 import javafx.application.Application;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -17,6 +19,8 @@ import java.time.format.DateTimeFormatter;
 
 
 public class AlunoBoundary extends Application implements EventHandler<ActionEvent> {
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     private TextField txt_id = new TextField();
     private TextField txt_ra = new TextField();
     private TextField txt_nome = new TextField();
@@ -27,13 +31,35 @@ public class AlunoBoundary extends Application implements EventHandler<ActionEve
 
     private AlunoControl control = new AlunoControl();
 
+    private TableView<Aluno> tableView = new TableView<>(control.getAlunos());
+
+    private void generateTable() {
+        TableColumn<Aluno, Long> colId = new TableColumn<>("ID");
+        TableColumn<Aluno, String> colRa = new TableColumn<>("RA");
+        TableColumn<Aluno, String> colNome = new TableColumn<>("NOME");
+        TableColumn<Aluno, String> colNascimento = new TableColumn<>("NASCIMENTO");
+
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colRa.setCellValueFactory(new PropertyValueFactory<>("ra"));
+        colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colNascimento.setCellValueFactory(item -> new ReadOnlyStringWrapper(
+                dtf.format(item.getValue().getNascimento()
+        )));
+
+
+        tableView.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> entityToBoundary(dtf, newValue)
+        );
+        tableView.getColumns().addAll(colId, colRa, colNome, colNascimento);
+    }
+
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         BorderPane bp = new BorderPane();
         Scene scn = new Scene(bp, 400, 300);
 
         GridPane gp = new GridPane();
-
+        generateTable();
         gp.add(new Label("ID "), 0, 0);
         gp.add(new Label("RA "), 0, 1);
         gp.add(new Label("NOME "), 0, 2);
@@ -49,7 +75,8 @@ public class AlunoBoundary extends Application implements EventHandler<ActionEve
         btn_adicionar.setOnAction(this);
         btn_pesquisar.setOnAction(this);
 
-        bp.setCenter(gp);
+        bp.setTop(gp);
+        bp.setCenter(tableView);
 
         stage.setScene(scn);
         stage.setTitle("Gestão de Alunos");
@@ -62,7 +89,6 @@ public class AlunoBoundary extends Application implements EventHandler<ActionEve
 
     @Override
     public void handle(ActionEvent event) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         if (event.getTarget() == btn_adicionar) {
         Aluno novoAluno = boundaryToEntity(dtf);
             control.adicionar(novoAluno);
